@@ -1,16 +1,17 @@
 from datetime import timedelta
 
-from authentication.models import CustomToken
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions
 from rest_framework.authentication import TokenAuthentication
 
+from authentication.models import Token
+
 
 class CustomTokenAuth(TokenAuthentication):
     def get_model(self):
-        return CustomToken
+        return Token
 
     def authenticate_credentials(self, key):
         model = self.get_model()

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "rest_framework.authtoken",
+    "authentication",
 ]
 
 MIDDLEWARE = [
@@ -125,3 +125,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TOKEN_EXPIRATION = 5
+
+AUTH_USER_MODEL = "authentication.CustomUser"
