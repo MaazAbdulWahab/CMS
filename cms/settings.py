@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import logging
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-p(!j2cobs6vycz1pma1s)yk67g(r*s4r&l226iqg))3uuu^k89"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["127.0.0.1"]
+ENVIRONMENT = "DEVELOPMENT"
 
 # Application definition
 
@@ -127,3 +129,35 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 TOKEN_EXPIRATION = 5
 
 AUTH_USER_MODEL = "authentication.CustomUser"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "first_formatter": {
+            "format": "{asctime} - {levelname} - {module} - {message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "info.log",
+            "formatter": "first_formatter",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "first_formatter",
+        },
+    },
+    "loggers": {
+        "main": {
+            "handlers": ["file", "console"],
+            "propagate": True,
+            "level": "INFO",
+        }
+    },
+}
+
+STATIC_ROOT = BASE_DIR / "static"
