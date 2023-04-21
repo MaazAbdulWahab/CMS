@@ -161,3 +161,11 @@ LOGGING = {
 
 STATIC_ROOT = BASE_DIR / "static"
 AUTH_USER_MODEL = "authentication.User"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    
+}

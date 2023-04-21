@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from authentication.models import Token, User
 from authentication.utils import CustomTokenAuth
 from authentication.serializers import UserCreationSerializer, AuthorCreationSerializer, AdminCreationSerializer
+import logging
+logger= logging.getLogger("main")
 
 
 class Login(APIView):
@@ -26,8 +28,10 @@ class Login(APIView):
         if not user.check_password(request.data.get("password")):
             return Response({"message": "Wrong Password"}, status=HTTP_400_BAD_REQUEST)
 
-        token = Token.objects.create(user=user)
-
+        try:
+            token = Token.objects.create(user=user)
+        except:
+            return Response({"message":"Can Not Login Now"}, status=HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({"message": "Success", "token": token.key}, status=HTTP_200_OK)
 
 
@@ -47,22 +51,25 @@ class UserSignup(APIView):
     authentication_classes=()
     serializer_class= UserCreationSerializer
     def post(self, request,*args,**kwargs):
-        
-        ser= self.ser_class(request.data)
+        ser= self.serializer_class(data=request.data)
 
-        if ser.is_valid():
-            ser.save()
-            return Response({"message":"Created"}, status= HTTP_200_OK)
+        try:
+            if ser.is_valid():
+                ser.save()
+                return Response({"message":"Created"}, status= HTTP_200_OK)
 
-        else:
-            return Response({"message":ser.error_messages}, status=HTTP_400_BAD_REQUEST)
-
+            else:
+                logger.error(ser.errors)
+                return Response({"message":"Could Not Create Now"}, status=HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            logger.error(e)
+            return Response({"message":"Could Not Create Now"}, status=HTTP_500_INTERNAL_SERVER_ERROR)
 
 class AuthorSignup(UserSignup):
    serializer_class= AuthorCreationSerializer
 
 
-class AdminSignup(APIView):
+class AdminSignup(UserSignup):
    serializer_class= AdminCreationSerializer
 
 
