@@ -24,7 +24,7 @@ class Author(models.Model):
 """
 
 
-class CustomUser(AbstractUser):
+class User(AbstractUser):
     isAdmin = models.BooleanField(default=False)
     isReader = models.BooleanField(default=False)
     isWriter = models.BooleanField(default=False)

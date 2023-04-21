@@ -126,4 +126,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TOKEN_EXPIRATION = 5
 
-AUTH_USER_MODEL = "authentication.CustomUser"
+AUTH_USER_MODEL = "authentication.User"
