@@ -129,7 +129,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 TOKEN_EXPIRATION = 5
 
 
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
@@ -164,8 +163,7 @@ AUTH_USER_MODEL = "authentication.User"
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
     ],
-    
 }
