@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token as BaseToken
+import uuid
 
 ACTIVE = "ACTIVE"
 PENDING = "PENDING"
@@ -25,6 +26,7 @@ class Author(models.Model):
 
 
 class User(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     isAdmin = models.BooleanField(default=False)
     isReader = models.BooleanField(default=False)
     isWriter = models.BooleanField(default=False)
