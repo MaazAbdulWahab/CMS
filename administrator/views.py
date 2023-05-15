@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from authentication.utils import CustomTokenAuth
+from authentication.utils import CustomTokenAuth, IsAdminAllowed
 from authentication.models import User, PENDING, ACTIVE, REJECTED,WITHHELD
 from rest_framework.response import Response
 import uuid
@@ -14,7 +14,7 @@ from rest_framework import status
 
 
 class UpdateAuthorStatus(APIView):
-    permission_classes=(IsAuthenticated,)
+    permission_classes=(IsAuthenticated & IsAdminAllowed)
     authentication_classes=(CustomTokenAuth)
     def put(self, request, *args,**kwargs):
         

@@ -8,6 +8,8 @@ from rest_framework.authentication import TokenAuthentication
 
 from authentication.models import Token
 
+from rest_framework import permissions
+
 
 class CustomTokenAuth(TokenAuthentication):
     def get_model(self):
@@ -28,3 +30,12 @@ class CustomTokenAuth(TokenAuthentication):
             token.delete()
             raise exceptions.AuthenticationFailed(_("Token Expired"))
         return (token.user, token)
+    
+
+
+class IsAdminAllowed(permissions.BasePermission):
+   
+
+    def has_permission(self, request, view):
+        user= request.user
+        return user.isAdmin

@@ -11,9 +11,7 @@ class CreationSerializer(serializers.Serializer):
     last_name=serializers.CharField(min_length=4, max_length=16)
 
     class Meta:
-        # ToDo items belong to a parent list, and have an ordering defined
-        # by the 'position' field. No two items in a given list may share
-        # the same position.
+       
         validators = [
             UniqueTogetherValidator(
                 queryset=User.objects.all().values('first_name','last_name'),
@@ -26,7 +24,7 @@ class UserCreationSerializer(CreationSerializer):
 
     def create(self, validated_data):
         user=User.objects.create(email=validated_data['email'], first_name=validated_data['first_name'],
-        last_name=validated_data['last_name'], isReader=True, username=validated_data['first_name']+' R '+validated_data['last_name'])
+        last_name=validated_data['last_name'], isReader=True, username=validated_data['first_name']+validated_data['last_name'])
         user.set_password(validated_data['password'])
         user.save()
         return user
@@ -39,7 +37,7 @@ class AuthorCreationSerializer(CreationSerializer):
     def create(self, validated_data):
         user=User.objects.create(email=validated_data['email'], first_name=validated_data['first_name'],
         last_name=validated_data['last_name'], isWriter=True, activationStatus=PENDING,
-        username=validated_data['first_name']+' W '+validated_data['last_name'])
+        username=validated_data['first_name']+validated_data['last_name'])
         user.set_password(validated_data['password'])
         user.save()
         return user
@@ -50,7 +48,7 @@ class AdminCreationSerializer(CreationSerializer):
 
     def create(self, validated_data):
         user=User.objects.create(email=validated_data['email'], first_name=validated_data['first_name'],
-        last_name=validated_data['last_name'], isAdmin=True,username=validated_data['first_name']+' A '+validated_data['last_name'],
+        last_name=validated_data['last_name'], isAdmin=True,username=validated_data['first_name']+validated_data['last_name'],
         activationStatus=PENDING)
         user.set_password(validated_data['password'])
         user.save()
