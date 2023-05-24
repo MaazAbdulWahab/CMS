@@ -14,7 +14,3 @@ class ListFollowedAuthors(APIView):
 
 class FindAuthor(APIView):
     pass
-
-
-class GetKeywords(APIView):
-    pass
