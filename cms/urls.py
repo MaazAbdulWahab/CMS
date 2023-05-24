@@ -17,15 +17,16 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("authentication.urls")),
-    path("administration/", include("administrator.urls"))
+    path("administration/", include("administrator.urls")),
+    path("core/", include("core.urls")),
+    path("reader/", include("readerapp.urls")),
 ]
-
 
 
 urlpatterns += staticfiles_urlpatterns()
